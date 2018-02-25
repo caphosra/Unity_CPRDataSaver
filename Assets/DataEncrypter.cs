@@ -122,7 +122,7 @@ namespace CPRUnitySystem
             }
         }
 
-        protected static CPRDecryptFunc DefaultDecryptFunction { get { return m_DecryptFunction; } }
+        protected static CPRDecryptFunc DefaultDecryptFunction { get { return AesDecrypt; } }
     }
 
     public delegate string CPREncryptFunc(string value, string Password);
