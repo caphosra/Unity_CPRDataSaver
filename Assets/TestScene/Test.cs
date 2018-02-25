@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CPRUnitySystem;
 
-public class CPRDataSaverBehaviour : MonoBehaviour
+public class Test : MonoBehaviour
 {
 
     // Use this for initialization
