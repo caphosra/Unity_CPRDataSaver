@@ -21,18 +21,18 @@ In this way you can save the data.
 ```C#
 // using CPRUnitySystem;
 
-CPRDataSaver.SetPlayerPrefsEncrypt("Key", playerSaveData, "password!!!!!!!!");
+CPRDataSaver.SetPlayerPrefsEncrypt("Key", playerSaveData, "password");
 ```
 You can do this in retrieving data.
 ```C#
-var playerSaveData = CPRDataSaver.SetPlayerPrefsEncrypt<PlayerSaveData>("Key", "password!!!!!!!!");
+var playerSaveData = CPRDataSaver.SetPlayerPrefsEncrypt<PlayerSaveData>("Key", "password");
 ```
 It can also be used without encryption.
 ```C#
 // Save
-CPRDataSaver.SetPlayerPrefs("KeyName", playerSaveData);
+CPRDataSaver.SetPlayerPrefs("Key", playerSaveData);
 // Load
-playerSaveData = CPRDataSaver.GetPlayerPrefs<PlayerSaveData>("KeyName");
+playerSaveData = CPRDataSaver.GetPlayerPrefs<PlayerSaveData>("Key");
 ```
 
 ## Install
