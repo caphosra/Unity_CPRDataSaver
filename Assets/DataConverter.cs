@@ -29,7 +29,7 @@ namespace CPRUnitySystem
         {
             if (m_UseEncoding == null)
             {
-                return System.Convert.ToBase64String(b);
+                return Convert.ToBase64String(b);
             }
             else
             {
@@ -41,7 +41,7 @@ namespace CPRUnitySystem
         {
             if (m_UseEncoding == null)
             {
-                return System.Convert.FromBase64String(s);
+                return Convert.FromBase64String(s);
             }
             else
             {

@@ -2,8 +2,6 @@
 using System.Security.Cryptography;
 using System.Collections.Generic;
 
-using UnityEngine;
-
 namespace CPRUnitySystem
 {
     public partial class CPRDataSaver
@@ -13,6 +11,8 @@ namespace CPRUnitySystem
         /// </summary>
         protected static string AesEncrypt(string value, string Password)
         {
+            OutputLog("Encrypt Start", true);
+
             byte[] encryptText;
             using (AesManaged aes = new AesManaged())
             {
@@ -27,12 +27,18 @@ namespace CPRUnitySystem
                 Rfc2898DeriveBytes deriveBytes = new Rfc2898DeriveBytes(Password, 16);
                 byte[] salt = new byte[16]; // Rfc2898DeriveBytesが内部生成したなソルトを取得
                 salt = deriveBytes.Salt;
+
+                OutputLog("Salt " + ConvertToString(salt), false);
+
                 // 生成した擬似乱数から16バイト切り出したデータをパスワードにする
                 byte[] bufferKey = deriveBytes.GetBytes(16);
+                OutputLog("Key " + ConvertToString(bufferKey), false);
 
                 aes.Key = bufferKey;
                 // IV ( Initilization Vector ) は、AesManagedにつくらせる
                 aes.GenerateIV();
+
+                OutputLog("IV " + ConvertToString(aes.IV), false);
 
                 //Encryption interface.
                 ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
@@ -45,7 +51,12 @@ namespace CPRUnitySystem
                 enc.AddRange(encryptText);
 
                 encryptText = enc.ToArray();
+
+                OutputLog("EncryptedText " + ConvertToString(encryptText), false);
             }
+
+            OutputLog("Encrypt End", true);
+
             return ConvertToString(encryptText);
         }
 
@@ -54,6 +65,8 @@ namespace CPRUnitySystem
         /// </summary>
         protected static string AesDecrypt(string value, string Password)
         {
+            OutputLog("Decrypt Start", true);
+
             byte[] decryptText;
             using (AesManaged aes = new AesManaged())
             {
@@ -67,9 +80,13 @@ namespace CPRUnitySystem
                 // salt
                 byte[] salt = text.Take(16).ToArray();
 
+                OutputLog("Salt " + ConvertToString(salt), false);
+
                 // Initilization Vector
                 byte[] iv = text.Skip(16).Take(16).ToArray();
                 aes.IV = iv;
+
+                OutputLog("IV " + ConvertToString(iv), false);
 
                 text = text.Skip(32).ToArray();
 
@@ -78,10 +95,17 @@ namespace CPRUnitySystem
                 byte[] bufferKey = deriveBytes.GetBytes(16);    // 16バイトのsaltを切り出してパスワードに変換
                 aes.Key = bufferKey;
 
+                OutputLog("Key " + ConvertToString(bufferKey), false);
+
                 //Decryption interface.
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
                 decryptText = decryptor.TransformFinalBlock(text, 0, text.Length);
+
+                OutputLog("DecryptText " + ConvertToString(decryptText), false);
             }
+
+            OutputLog("Decrypt End", true);
+
             return ConvertToString(decryptText);
         }
 

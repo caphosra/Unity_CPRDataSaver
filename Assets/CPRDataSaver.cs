@@ -1,13 +1,35 @@
-﻿using System.Linq;
-using System.Security.Cryptography;
-using System.Collections.Generic;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CPRUnitySystem
 {
     public partial class CPRDataSaver
     {
+        private static LogSecurity m_LogSecurity = LogSecurity.High;
+
+        /// <summary>
+        /// What information should be displayed in the log
+        /// </summary>
+        public static LogSecurity LogSecurity
+        {
+            get
+            {
+                return m_LogSecurity;
+            }
+            set
+            {
+                m_LogSecurity = value;
+            }
+        }
+
+        private static void OutputLog(string s, bool security)
+        {
+            if (LogSecurity == LogSecurity.VeryHigh)
+                return;
+            if (!security && LogSecurity == LogSecurity.High)
+                return;
+            Debug.Log("CPRDataSaver : " + s);
+        }
+
         /// <summary>
         /// This function is for using the same function as PlayerPrefs in your own class.
         /// </summary>
@@ -39,5 +61,25 @@ namespace CPRUnitySystem
         {
             return (T)m_DeserializeFunction(m_DecryptFunction(PlayerPrefs.GetString(key), password), typeof(T));
         }
+    }
+
+    /// <summary>
+    /// What information should be displayed in the log
+    /// </summary>
+    public enum LogSecurity
+    {
+        /// <summary>
+        /// It does not display any logs.
+        /// </summary>
+        VeryHigh,
+        /// <summary>
+        /// It is a normal state.
+        /// </summary>
+        High,
+        /// <summary>
+        /// It displays all logs including those related to encryption. 
+        /// It is not recommended.
+        /// </summary>
+        Low
     }
 }

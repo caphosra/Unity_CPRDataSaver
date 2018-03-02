@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using CPRUnitySystem;
 
 public class Test : MonoBehaviour
@@ -21,8 +19,9 @@ public class Test : MonoBehaviour
 
         Debug.Log("Save and load");
         PlayerPrefs.SetString("TestEnc", "");
-        CPRDataSaver.SetPlayerPrefsEncrypt("TestEnc", t, "password!!!!!!!!");
-        t = CPRDataSaver.GetPlayerPrefsEncrypt<TestClass>("TestEnc", "password!!!!!!!!");
+        CPRDataSaver.LogSecurity = LogSecurity.Low;
+        CPRDataSaver.SetPlayerPrefsEncrypt("TestEnc", t, "password");
+        t = CPRDataSaver.GetPlayerPrefsEncrypt<TestClass>("TestEnc", "password");
         Debug.Log("TestClass : a=" + t.a + " b=" + t.b);
     }
 
