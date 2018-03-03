@@ -47,7 +47,7 @@ namespace CPRUnitySystem
         }
 
         /// <summary>
-        /// This function encrypts instances of your own class when writing to PlayerPrefs.
+        /// This function encrypts instances of your own class when writing in PlayerPrefs.
         /// </summary>
         public static void SetPlayerPrefsEncrypt<T>(string key, T value, string password) where T : class
         {
@@ -55,7 +55,7 @@ namespace CPRUnitySystem
         }
 
         /// <summary>
-        /// This function encrypts instances of your own class when writing to PlayerPrefs.
+        /// This function decrypts instances of your own class when reading from PlayerPrefs.
         /// </summary>
         public static T GetPlayerPrefsEncrypt<T>(string key, string password) where T : class
         {
@@ -63,7 +63,7 @@ namespace CPRUnitySystem
         }
 
         /// <summary>
-        /// This function is for storing instances of your own class in a file.
+        /// This function is for writing instances of your own class in a file.
         /// </summary>
         public static void SetDataFile<T>(string path, T value)
         {
@@ -76,6 +76,22 @@ namespace CPRUnitySystem
         public static T GetDataFile<T>(string path)
         {
             return (T)m_DeserializeFunction(ReadFile(path), typeof(T));
+        }
+
+        /// <summary>
+        /// This function encrypts instances of your own class when writing in file.
+        /// </summary>
+        public static void SetDataFileEncrypt<T>(string path, T value, string password)
+        {
+            WriteFile(path, m_EncryptFunction(m_SerializeFunction(value, typeof(T)), password));
+        }
+
+        /// <summary>
+        /// This function decrypts instances of your own class when reading from file.
+        /// </summary>
+        public static T GetDataFileEncrypt<T>(string path, string password)
+        {
+            return (T)m_DeserializeFunction(m_DecryptFunction(ReadFile(path), password), typeof(T));
         }
     }
 

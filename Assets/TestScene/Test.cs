@@ -23,12 +23,12 @@ public class Test : MonoBehaviour
         CPRDataSaver.SetPlayerPrefsEncrypt("TestEnc", t, "password");
         t = CPRDataSaver.GetPlayerPrefsEncrypt<TestClass>("TestEnc", "password");
         Debug.Log("TestClass : a=" + t.a + " b=" + t.b);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        Debug.Log("Save and load");
+        CPRDataSaver.LogSecurity = LogSecurity.Low;
+        CPRDataSaver.SetDataFileEncrypt(Application.dataPath + "/TestEnc.enc", t, "password");
+        t = CPRDataSaver.GetDataFileEncrypt<TestClass>(Application.dataPath + "/TestEnc.enc", "password");
+        Debug.Log("TestClass : a=" + t.a + " b=" + t.b);
     }
 }
 
