@@ -61,6 +61,22 @@ namespace CPRUnitySystem
         {
             return (T)m_DeserializeFunction(m_DecryptFunction(PlayerPrefs.GetString(key), password), typeof(T));
         }
+
+        /// <summary>
+        /// This function is for storing instances of your own class in a file.
+        /// </summary>
+        public static void SetDataFile<T>(string path, T value)
+        {
+            WriteFile(path, m_SerializeFunction(value, typeof(T)));
+        }
+
+        /// <summary>
+        /// This function is for reading instances of your own class from the file.
+        /// </summary>
+        public static T GetDataFile<T>(string path)
+        {
+            return (T)m_DeserializeFunction(ReadFile(path), typeof(T));
+        }
     }
 
     /// <summary>

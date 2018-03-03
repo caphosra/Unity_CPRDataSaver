@@ -132,7 +132,14 @@ namespace CPRUnitySystem
         }
     }
 
+    /// <summary>
+    /// Serializer
+    /// </summary>
     public delegate string SerializeFunc(object o, Type t);
+
+    /// <summary>
+    /// Deserializer
+    /// </summary>
     public delegate object DeserializeFunc(string s, Type t);
 }
 
